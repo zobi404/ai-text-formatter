@@ -1,0 +1,5 @@
+django
+markdown 
+python-docx 
+xhtml2pdf 
+beautifulsoup4

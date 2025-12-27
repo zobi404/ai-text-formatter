@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Use - AI Text Formatter</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #eef2ff, #f8fafc);
+            min-height: 100vh;
+        }
+
+        .app-header {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 3rem;
+        }
+
+        .app-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .nav-pills {
+            background: white;
+            padding: 0.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .nav-pills .nav-link {
+            border-radius: 8px;
+            color: #64748b;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-pills .nav-link:hover {
+            background: #f1f5f9;
+            color: #4f46e5;
+        }
+
+        .nav-pills .nav-link.active {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+        }
+
+        .info-card {
+            background: white;
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #e5e7eb;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+        }
+
+        .icon-wrapper {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .icon-purple { background: linear-gradient(135deg, #f3f4ff, #e0e7ff); }
+        .icon-green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+        .icon-blue { background: linear-gradient(135deg, #eff6ff, #dbeafe); }
+        .icon-orange { background: linear-gradient(135deg, #fff7ed, #ffedd5); }
+        .icon-pink { background: linear-gradient(135deg, #fdf2f8, #fce7f3); }
+        .icon-indigo { background: linear-gradient(135deg, #eef2ff, #e0e7ff); }
+
+        .info-card h3 {
+            color: #1e293b;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .info-card p {
+            color: #64748b;
+            line-height: 1.7;
+            margin-bottom: 0;
+        }
+
+        .info-card ul {
+            color: #64748b;
+            line-height: 1.8;
+        }
+
+        .info-card ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .badge-custom {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-right: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .feature-list li {
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 1rem;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #22c55e;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            padding: 3rem;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+            margin: 3rem 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .btn-light-custom {
+            background: white;
+            color: #4f46e5;
+            padding: 0.8rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+        }
+
+        .btn-light-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            color: #4f46e5;
+        }
+
+        footer {
+            background: #0f172a;
+            color: #cbd5f5;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer span {
+            color: #818cf8;
+            font-weight: 600;
+        }
+
+        .code-example {
+            background: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            color: #475569;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<header class="app-header">
+    <div class="container">
+        <h1>📚 How to Use AI Text Formatter</h1>
+        <p class="mb-0 mt-2">Your complete guide to formatting AI-generated content</p>
+    </div>
+</header>
+
+<div class="container mb-5">
+    <!-- Navigation Pills -->
+    <div class="d-flex justify-content-center mb-4">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="/">🏠 Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="/instructions/">📖 Instructions</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Why Use This Tool Section -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="info-card text-center">
+                <div class="icon-wrapper icon-purple mx-auto">
+                    ✨
+                </div>
+                <h2 class="mb-3">Why Use AI Text Formatter?</h2>
+                <p class="lead text-muted">Transform messy AI outputs into professional, well-formatted documents in seconds</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Benefits Cards -->
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-green">
+                    ⚡
+                </div>
+                <h3>Save Time</h3>
+                <p>No more manual formatting! Convert AI-generated text with markdown support into beautiful documents instantly.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-blue">
+                    📄
+                </div>
+                <h3>Multiple Formats</h3>
+                <p>Export your content to Word (.docx) or PDF format with proper styling and formatting preserved.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-orange">
+                    📚
+                </div>
+                <h3>History Tracking</h3>
+                <p>Never lose your work! All formatted content is automatically saved and can be accessed anytime.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-pink">
+                    🎨
+                </div>
+                <h3>Professional Output</h3>
+                <p>Get clean, professional-looking documents suitable for reports, presentations, and documentation.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-indigo">
+                    🔍
+                </div>
+                <h3>Easy Preview</h3>
+                <p>See exactly how your formatted content will look before exporting to ensure perfection.</p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="info-card">
+                <div class="icon-wrapper icon-purple">
+                    🔒
+                </div>
+                <h3>Simple & Secure</h3>
+                <p>User-friendly interface with secure data handling. Your content stays private and accessible only to you.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Use Section -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="info-card">
+                <span class="badge-custom">Step-by-Step Guide</span>
+                <h2>How to Use the Tool</h2>
+                <p class="mb-4">Follow these simple steps to format and export your AI-generated content:</p>
+
+                <div class="mb-4 d-flex align-items-start">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h4>Paste Your Text</h4>
+                        <p class="mb-2">Copy text from ChatGPT, Claude, or any AI tool and paste it into the text area. Our tool supports markdown formatting including:</p>
+                        <ul class="feature-list">
+                            <li><strong>Headings:</strong> # H1, ## H2, ### H3</li>
+                            <li><strong>Bold:</strong> **bold text**</li>
+                            <li><strong>Italic:</strong> *italic text*</li>
+                            <li><strong>Lists:</strong> Numbered and bullet points</li>
+                            <li><strong>Code:</strong> Inline `code` and code blocks</li>
+                            <li><strong>Tables:</strong> Markdown tables</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mb-4 d-flex align-items-start">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h4>Click Format</h4>
+                        <p>Hit the "✨ Format" button to process your text. The tool will convert markdown to formatted HTML and display a live preview.</p>
+                    </div>
+                </div>
+
+                <div class="mb-4 d-flex align-items-start">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h4>Review Preview</h4>
+                        <p>Check the formatted preview to ensure everything looks good. The preview shows exactly how your document will appear.</p>
+                    </div>
+                </div>
+
+                <div class="mb-4 d-flex align-items-start">
+                    <div class="step-number">4</div>
+                    <div>
+                        <h4>Export Your Document</h4>
+                        <p class="mb-2">Choose your preferred format:</p>
+                        <ul>
+                            <li><strong>📄 Export Word:</strong> Download as .docx file for Microsoft Word</li>
+                            <li><strong>📕 Export PDF:</strong> Download as PDF for universal compatibility</li>
+                            <li><strong>📋 Copy Text:</strong> Copy plain text to clipboard</li>
+                        </ul>
+                        <p>Enter a filename when prompted, and your document will download automatically.</p>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-start">
+                    <div class="step-number">5</div>
+                    <div>
+                        <h4>Access History</h4>
+                        <p>All formatted content is automatically saved in the history sidebar. You can:</p>
+                        <ul class="feature-list">
+                            <li>Load any previous format with one click</li>
+                            <li>Search through your history</li>
+                            <li>Delete individual items or clear all history</li>
+                            <li>Re-export any saved content</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Markdown Example -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="info-card">
+                <h3>📝 Markdown Example</h3>
+                <p>Here's a quick example of markdown formatting:</p>
+                <div class="code-example">
+# Main Heading
+
+## Sub Heading
+
+This is **bold text** and this is *italic text*.
+
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+
+1. Numbered item 1
+2. Numbered item 2
+
+`inline code` example
+
+```
+Code block example
+```
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Use Cases -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="info-card">
+                <h3>💡 Perfect For</h3>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <ul class="feature-list">
+                            <li>Creating professional reports</li>
+                            <li>Formatting research papers</li>
+                            <li>Preparing documentation</li>
+                            <li>Writing technical guides</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="feature-list">
+                            <li>Meeting notes and summaries</li>
+                            <li>Content for presentations</li>
+                            <li>Blog post drafts</li>
+                            <li>Educational materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="info-card">
+                <h3>💡 Pro Tips</h3>
+                <ul class="feature-list">
+                    <li><strong>Use Markdown:</strong> Format your AI prompts to include markdown syntax for better results</li>
+                    <li><strong>Preview First:</strong> Always check the preview before exporting to catch any formatting issues</li>
+                    <li><strong>Save Frequently:</strong> Each format automatically saves to history - no manual saving needed</li>
+                    <li><strong>Search History:</strong> Use the search bar in history to quickly find old formats</li>
+                    <li><strong>Descriptive Filenames:</strong> Use clear, descriptive names when exporting for easy organization</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+        <h2>Ready to Get Started?</h2>
+        <p class="mb-4">Start formatting your AI-generated content now and create professional documents in seconds!</p>
+        <a href="/" class="btn-light-custom">🚀 Go to Formatter</a>
+    </div>
+</div>
+
+<footer>
+  <div class="container">
+    Made with <span>❤️</span> by Zohaib, Maham, Isra, Mariam
+  </div>
+</footer>
+
+</body>
+</html>
