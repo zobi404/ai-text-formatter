@@ -41,6 +41,14 @@
             padding: 2rem;
         }
 
+        .badge {
+            transition: all 0.3s ease;
+        }
+
+        .badge strong {
+            font-size: 1.1em;
+        }
+
         textarea {
             border-radius: 12px;
             resize: vertical;
@@ -111,6 +119,15 @@
 
         .history-item:hover {
             background-color: #f8fafc;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .badge strong.updating {
+            animation: pulse 0.3s ease;
         }
     </style>
 </head>
@@ -185,13 +202,21 @@
           <input type="hidden" name="formatted_html" id="formattedHtmlInput" value="">
           <input type="hidden" name="file_name" id="file_name">
 
-          <div class="d-flex flex-wrap gap-2 mb-3">
+          <div class="d-flex flex-wrap gap-2 mb-3 align-items-center">
             <button class="btn btn-primary px-4" name="format" value="1" type="submit" id="formatBtn">
               ✨ Format
             </button>
             <div class="export-buttons {% if html_output %}active{% endif %}" id="exportButtons">
               <button type="button" class="btn btn-success px-4 me-2" onclick="openFileModal('docx')" {% if not html_output %}disabled{% endif %}>Export Word</button>
               <button type="button" class="btn btn-danger px-4" onclick="openFileModal('pdf')" {% if not html_output %}disabled{% endif %}>Export PDF</button>
+            </div>
+            <div class="ms-auto d-flex gap-3">
+              <span class="badge bg-primary fs-6 px-3 py-2">
+                📝 <strong id="wordCount">0</strong> words
+              </span>
+              <span class="badge bg-warning text-dark fs-6 px-3 py-2">
+                🔤 <strong id="charCount">0</strong> characters
+              </span>
             </div>
           </div>
         </form>
@@ -261,6 +286,37 @@ let hasMoreHistory = true;
 
 // Get CSRF token from Django template
 const csrftoken = '{{ csrf_token }}';
+
+// Live counter update function
+function updateCounters() {
+    const textarea = document.getElementById('rawTextArea');
+    const text = textarea.value;
+    
+    // Character count
+    const charCount = text.length;
+    const charElement = document.getElementById('charCount');
+    charElement.textContent = charCount.toLocaleString();
+    charElement.classList.add('updating');
+    setTimeout(() => charElement.classList.remove('updating'), 300);
+    
+    // Word count
+    const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+    const wordCount = text.trim() === '' ? 0 : words.length;
+    const wordElement = document.getElementById('wordCount');
+    wordElement.textContent = wordCount.toLocaleString();
+    wordElement.classList.add('updating');
+    setTimeout(() => wordElement.classList.remove('updating'), 300);
+}
+
+// Initialize counters on page load
+document.addEventListener('DOMContentLoaded', function() {
+    updateCounters();
+    
+    // Add event listener for textarea input
+    const textarea = document.getElementById('rawTextArea');
+    textarea.addEventListener('input', updateCounters);
+    textarea.addEventListener('paste', () => setTimeout(updateCounters, 10));
+});
 
 // Open export modal
 function openFileModal(ext) {
@@ -354,6 +410,7 @@ document.getElementById("formatForm").addEventListener("submit", function(e){
         }
     }
 });
+
 function copyText() {
     let t = document.getElementById("copyText");
     t.select();
@@ -384,6 +441,9 @@ function loadHistory(id) {
 
             // Set raw text
             document.querySelector('textarea[name="raw_text"]').value = data.raw_text;
+            
+            // Update counters
+            updateCounters();
             
             // Set formatted HTML in hidden input
             document.getElementById('formattedHtmlInput').value = data.formatted_html;
@@ -535,8 +595,6 @@ function loadMoreHistory() {
             alert('Failed to load more history');
         });
 }
-
-// Copy text
 </script>
 
 </body>
